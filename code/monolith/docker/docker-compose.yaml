@@ -7,8 +7,6 @@ services:
     container_name: monolith-application
     ports:
       - 8080:8080
-    networks:
-      - monolith
     depends_on:
       - application-db
     environment:
@@ -21,8 +19,6 @@ services:
     container_name: monolith-application-db
     volumes:
       - application-db-data:/var/lib/postgresql/data/
-    networks:
-      - monolith
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=1234
@@ -35,8 +31,6 @@ services:
     container_name: monolith-grafana
     ports:
       - 3000:3000
-    networks:
-      - monolith
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
@@ -50,8 +44,6 @@ services:
     container_name: monolith-prometheus
     ports:
       - 9090:9090
-    networks:
-      - monolith
     volumes:
       - ./config/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
       - ./config/prometheus/alert.rules:/etc/prometheus/alert.rules
@@ -62,8 +54,6 @@ services:
     container_name: monolith-alertmanager
     ports:
       - 9093:9093
-    networks:
-      - monolith
     volumes:
       - ./config/alertmanager/alertmanager.yaml:/etc/alertmanager/alertmanager.yml
 
@@ -71,8 +61,6 @@ services:
     image: quay.io/jaegertracing/all-in-one:1.24.0
     hostname: jaeger
     container_name: monolith-jaeger
-    networks:
-      - monolith
     ports:
       - 5775:5775/udp
       - 6831:6831/udp
@@ -86,6 +74,6 @@ volumes:
 
 networks:
   monolith:
-    driver: bridge
-    ipam:
-      driver: default
+    #    driver: bridge
+    #    ipam:
+    #      driver: default

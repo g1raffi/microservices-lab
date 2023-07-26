@@ -1,0 +1,148 @@
+version: '3'
+
+services:
+  order-db:
+    image: postgres:13
+    volumes:
+      - order-db-data:/var/lib/postgresql/data/
+    networks:
+      - kafka
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=1234
+    ports:
+      - 5432:5432
+
+  order:
+    image: quay.io/puzzle/microservices-lab-kafka-order:latest
+    ports:
+      - 8080:8080
+    networks:
+      - kafka
+    depends_on:
+      - order-db
+      - kafka
+    environment:
+      - QUARKUS_HTTP_PORT=8080
+      - QUARKUS_DATASOURCE_JDBC_URL=jdbc:tracing:postgresql://order-db:5432/admin
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+
+  stock-db:
+    image: postgres:13
+    volumes:
+      - stock-db-data:/var/lib/postgresql/data/
+    networks:
+      - kafka
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=1234
+    ports:
+      - 5433:5432
+
+  stock:
+    image: quay.io/puzzle/microservices-lab-kafka-stock:latest
+    ports:
+      - 8081:8080
+    networks:
+      - kafka
+    depends_on:
+      - stock-db
+      - kafka
+    environment:
+      - QUARKUS_HTTP_PORT=8080
+      - QUARKUS_DATASOURCE_JDBC_URL=jdbc:tracing:postgresql://stock-db:5432/admin
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+
+  zookeeper:
+    image: quay.io/debezium/zookeeper:2.3
+    hostname: zookeeper
+    container_name: debezium-zookeeper
+    networks:
+      - kafka
+    ports:
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
+
+  kafka:
+    image: quay.io/puzzle/microservices-lab-debezium-kafka:latest
+    hostname: kafka
+    container_name: debezium-kafka
+    ports:
+      - 9092:9092
+    networks:
+      - kafka
+    depends_on:
+      - zookeeper
+    environment:
+      - ZOOKEEPER_CONNECT=zookeeper:2181
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    networks:
+      - kafka
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./config/grafana/dashboards/:/opt/dashboards
+      - ./config/grafana/custom.yaml:/etc/grafana/provisioning/dashboards/custom.yaml
+      - ./config/grafana/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    networks:
+      - kafka
+    volumes:
+      - ./config/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./config/prometheus/alert.rules:/etc/prometheus/alert.rules
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    ports:
+      - 9093:9093
+    networks:
+      - kafka
+    volumes:
+      - ./config/alertmanager/alertmanager.yaml:/etc/alertmanager/alertmanager.yml
+
+  jaeger:
+    image: quay.io/jaegertracing/all-in-one:1.24.0
+    networks:
+      - kafka
+    ports:
+      - 5775:5775/udp
+      - 6831:6831/udp
+      - 6832:6832/udp
+      - 5778:5778
+      - 14268:14268
+      - 16686:16686
+
+  viewer:
+    image: quay.io/puzzle/microservices_lab_kafka_viewer:latest
+    ports:
+      - 8082:8080
+    networks:
+      - kafka
+    depends_on:
+      - kafka
+    environment:
+      - QUARKUS_HTTP_PORT=8080
+      - MP_MESSAGING_INCOMING_KAFKAMESSAGES_TOPICS=shop-order-request,shop-order-confirmation,shop-order-compensation
+      - MP_MESSAGING_INCOMING_KAFKAMESSAGES_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - MP_MESSAGING_INCOMING_KAFKAMESSAGES_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+
+volumes:
+  order-db-data:
+  stock-db-data:
+
+networks:
+  kafka:
+    driver: bridge
+    ipam:
+      driver: default
+
+

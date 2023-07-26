@@ -2,7 +2,7 @@ version: '3'
 
 services:
   order:
-    image: microservices-lab-debezium-order:latest
+    image: quay.io/puzzle/microservices-lab-debezium-order:latest
     hostname: order
     container_name: debezium-order
     ports:
@@ -108,7 +108,7 @@ services:
       - QUARKUS_HTTP_PORT=8080
 
   zookeeper:
-    image: quay.io/debezium/zookeeper:1.5
+    image: quay.io/debezium/zookeeper:2.3
     hostname: zookeeper
     container_name: debezium-zookeeper
     networks:

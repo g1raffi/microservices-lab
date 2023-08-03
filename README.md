@@ -49,11 +49,6 @@ Docsy is being enhanced using [docsy-plus](https://github.com/acend/docsy-plus/)
 [docsy-acend](https://github.com/acend/docsy-acend/) and [docsy-puzzle](https://github.com/puzzle/docsy-puzzle/)
 for brand specific settings.
 
-After cloning the main repo, you need to initialize the submodule like this:
-
-```bash
-git submodule update --init --recursive
-```
 
 The default configuration uses the puzzle setup from [config/_default](config/_default/config.toml).
 Further, specialized environments can be added in the `config` directory.

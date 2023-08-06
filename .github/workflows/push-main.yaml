@@ -73,7 +73,7 @@ jobs:
         name: Redeploy Deployments
         env:
           TRAINING_HELM_RELEASE: 'latest'
-          TRAINING_HELM_NAME: 'acend-microservices'
+          TRAINING_HELM_NAME: 'microservices-lab'
           TRAINING_NAMESPACE: 'acend-microservices-training-prod'
         run: |
           kubectl rollout restart deployment/${TRAINING_HELM_RELEASE}-${TRAINING_HELM_NAME}-acend --kubeconfig $HOME/.kube/config --namespace $TRAINING_NAMESPACE

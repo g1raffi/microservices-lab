@@ -23,12 +23,12 @@ RUN apt-get update \
 
 COPY --from=builder /src/public /
 
-RUN wkhtmltopdf --enable-internal-links --enable-local-file-access \
-    --margin-top 35mm --margin-bottom 22mm --margin-left 15mm --margin-right 10mm \
-    --enable-internal-links --enable-local-file-access \
-    --header-html /pdf/header/index.html --footer-html /pdf/footer/index.html \
-    --dpi 600 \
-    /pdf/index.html /pdf.pdf
+# RUN wkhtmltopdf --enable-internal-links --enable-local-file-access \
+#     --margin-top 35mm --margin-bottom 22mm --margin-left 15mm --margin-right 10mm \
+#     --enable-internal-links --enable-local-file-access \
+#     --header-html /pdf/header/index.html --footer-html /pdf/footer/index.html \
+#     --dpi 600 \
+#     /pdf/index.html /pdf.pdf
 
 FROM nginxinc/nginx-unprivileged:1.25-alpine
 
@@ -37,4 +37,4 @@ LABEL maintainer acend.ch
 EXPOSE 8080
 
 COPY --from=builder /src/public /usr/share/nginx/html
-COPY --from=wkhtmltopdf /pdf.pdf /usr/share/nginx/html/pdf/pdf.pdf
+# COPY --from=wkhtmltopdf /pdf.pdf /usr/share/nginx/html/pdf/pdf.pdf

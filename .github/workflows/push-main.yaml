@@ -43,7 +43,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            quay.io/acend/microservices-training:latest
+            quay.io/acend/microservices-lab:latest
       - 
         name: 'Install Helm'
         uses: azure/setup-helm@v3

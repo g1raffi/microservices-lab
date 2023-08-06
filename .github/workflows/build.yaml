@@ -61,16 +61,16 @@ jobs:
 
       - name: Deploy Helm Release
         env:
-          TRAINING_HELM_RELEASE: 'pr-${{ github.event.pull_request.number }}'
-          TRAINING_NAMESPACE: 'acend-microservices-lab-test'
+          TRAINING_HELM_RELEASE: 'microservices-pr-${{ github.event.pull_request.number }}'
+          TRAINING_NAMESPACE: 'acend-helm-basics-training-test'
           TRAINING_VERSION: '${{ github.sha }}'
         run: |
           helm upgrade $TRAINING_HELM_RELEASE acend-training-chart --install --wait --kubeconfig $HOME/.kube/config  --namespace=$TRAINING_NAMESPACE --set=app.name=$HELM_RELEASE --set=app.version=$TRAINING_VERSION --repo=https://acend.github.io/helm-charts/ --values=helm-chart/values.yaml --atomic
 
       - name: Redeploy Deployments
         env:
-          TRAINING_HELM_RELEASE: 'pr-${{ github.event.pull_request.number }}'
-          TRAINING_NAMESPACE: 'pitc-microservices-lab-test'
+          TRAINING_HELM_RELEASE: 'microservices-pr-${{ github.event.pull_request.number }}'
+          TRAINING_NAMESPACE: 'acend-helm-basics-training-test'
         run: |
           kubectl rollout restart deployment/$TRAINING_HELM_RELEASE-microservices-lab-puzzle --kubeconfig $HOME/.kube/config --namespace $TRAINING_NAMESPACE
 

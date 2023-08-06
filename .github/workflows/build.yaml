@@ -72,7 +72,7 @@ jobs:
           TRAINING_HELM_RELEASE: 'pr-${{ github.event.pull_request.number }}'
           TRAINING_NAMESPACE: 'acend-microservices-training-test'
         run: |
-          kubectl rollout restart deployment/$TRAINING_HELM_RELEASE-microservices-lab-puzzle --kubeconfig $HOME/.kube/config --namespace $TRAINING_NAMESPACE
+          kubectl rollout restart deployment/$TRAINING_HELM_RELEASE-microservices-lab-acend --kubeconfig $HOME/.kube/config --namespace $TRAINING_NAMESPACE
 
       - name: Comment PR Environments in PR
         uses: marocchino/sticky-pull-request-comment@v2

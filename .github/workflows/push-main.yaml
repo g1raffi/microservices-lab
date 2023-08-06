@@ -44,28 +44,6 @@ jobs:
           push: true
           tags: |
             quay.io/acend/microservices-training:latest
-      -
-        name: Build Mobi Version
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./Dockerfile
-          build-args: |
-            TRAINING_HUGO_ENV=mobi
-          push: true
-          tags: |
-            quay.io/acend/microservices-training:latest-mobi
-      -
-        name: Build OpenShift Version
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./Dockerfile
-          build-args: |
-            TRAINING_HUGO_ENV=openshift
-          push: true
-          tags: |
-            quay.io/acend/microservices-training:latest-openshift
       - 
         name: 'Install Helm'
         uses: azure/setup-helm@v3

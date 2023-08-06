@@ -13,6 +13,7 @@ public
 .vscode
 *.iml
 target
+.hugo_build.lock
 
 # eclipse
 .classpath

@@ -73,7 +73,7 @@ url = "https://www.acend.ch"
 [params]
 
 copyright = "Puzzle ITC GmbH"
-github_repo = "https://github.com/puzzle/microservices-lab"
+github_repo = "https://github.com/acend/microservices-lab"
 github_branch = "main"
 
 enabledModule = "base"
@@ -82,8 +82,8 @@ enabledModule = "base"
 offlineSearch = true
 
 # define base url and path for used code
-lab_git_repo = "https://github.com/puzzle/microservices-lab"
-lab_rawgit_repo = "https://raw.githubusercontent.com/puzzle/microservices-lab/main"
+lab_git_repo = "https://github.com/acend/microservices-lab"
+lab_rawgit_repo = "https://raw.githubusercontent.com/acend/microservices-lab/main"
 lab_code_basedir = "/code/"
 
 solution_git_repo = "https://github.com/puzzle/microservices-mastery"
@@ -122,17 +122,17 @@ footer_about_disable = true
 [[params.links.developer]]
 name = "GitHub"
 icon = "fab fa-github" 
-url = "https://github.com/puzzle/microservices-lab"
+url = "https://github.com/acend/microservices-lab"
 
 [[params.links.user]]
 name = "Twitter"
 icon = "fab fa-twitter"
-url = "https://twitter.com/puzzleitc"
+url = "https://twitter.com/acend"
   
 [[params.links.user]]
 name = "LinkedIn"
 icon = "fab fa-linkedin-in"
-url = "https://www.linkedin.com/company/puzzle-itc/"
+url = "https://www.linkedin.com/company/acend/"
 
 
 [module]

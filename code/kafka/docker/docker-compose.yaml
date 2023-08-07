@@ -56,7 +56,7 @@ services:
   grafana:
     image: docker.io/grafana/grafana:latest
     ports:
-      - 3000:3000
+      - 3001:3000
     networks:
       - kafka
     environment:

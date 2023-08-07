@@ -137,7 +137,7 @@ services:
     hostname: grafana
     container_name: debezium-grafana
     ports:
-      - 3000:3000
+      - 3001:3000
     networks:
       - debezium
     environment:

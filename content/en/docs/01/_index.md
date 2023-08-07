@@ -18,7 +18,7 @@ Following Software is required to run the labs:
 
 The following access must be available:
 
-* Lab Pages: https://microservices-lab.k8s.puzzle.ch/
+* Lab Pages: https://microservices-lab.training.acend.ch/docs/
 * Docker Registries: [docker.io](https://docker.io) and [quay.io](https://quay.io)
 * Source Repositories: [github.com](https://github.com)
 

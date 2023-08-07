@@ -30,7 +30,7 @@ services:
     hostname: grafana
     container_name: monolith-grafana
     ports:
-      - 3000:3000
+      - 3001:3000
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:

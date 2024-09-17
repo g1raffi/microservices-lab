@@ -2,20 +2,17 @@ acendTraining:
   servicePort: 8080
   deployments:
     - 
-      name: puzzle
-      replicaCount: 1
+      name: acend
+      replicaCount: 2
       image:
-        repository: quay.io/puzzle/microservices-lab
+        repository: quay.io/acend/microservices-lab
         pullPolicy: Always
         tag: ""
         tagsuffix: ""
       ingress:
-        annotations: 
-          kubernetes.io/ingress.class: nginx-public
-        useDefaultSecret: true
+        secretOverride: acend-wildcard
         appname: microservices-lab
-        domain: k8s.puzzle.ch
-
+        domain: training.acend.ch
 
 
 nameOverride: "microservices-lab"
